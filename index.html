@@ -61,7 +61,7 @@ async function run() {
     let driver = document.getElementById("driver").value;
     let lap = document.getElementById("lap").value;
 
-    let url = `http://127.0.0.1:8000/telemetry?year=${year}&gp=${gp}&driver=${driver}&lap=${lap}`;
+    let url = "https://tu-app.onrender.com/telemetry?year=${year}&gp=${gp}&driver=${driver}&lap=${lap}";
 
     let res = await fetch(url);
     let data = await res.json();

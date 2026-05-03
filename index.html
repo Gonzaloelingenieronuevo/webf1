@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun May  3 11:53:22 2026
+
+@author: gonza
+"""
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>F1 Dashboard</title>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<style>
+body {
+    background: #0b0b0b;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+select, button {
+    padding: 10px;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🏎️ Dashboard F1</h1>
+
+<select id="year">
+    <option value="2024">2024</option>
+</select>
+
+<select id="gp">
+    <option value="Japan">Japan</option>
+    <option value="Spain">Spain</option>
+    <option value="Monaco">Monaco</option>
+</select>
+
+<select id="driver">
+    <option value="VER">VER</option>
+    <option value="HAM">HAM</option>
+    <option value="RUS">RUS</option>
+</select>
+
+<input type="number" id="lap" value="10">
+
+<button onclick="run()">Ejecutar</button>
+
+<div id="output"></div>
+<div id="graph"></div>
+
+<script>
+async function run() {
+    let year = document.getElementById("year").value;
+    let gp = document.getElementById("gp").value;
+    let driver = document.getElementById("driver").value;
+    let lap = document.getElementById("lap").value;
+
+    let url = `http://127.0.0.1:8000/telemetry?year=${year}&gp=${gp}&driver=${driver}&lap=${lap}`;
+
+    let res = await fetch(url);
+    let data = await res.json();
+
+    document.getElementById("output").innerHTML =
+        "<pre>" + JSON.stringify(data, null, 2) + "</pre>";
+
+    // Demo gráfica fake (luego la conectamos real)
+    let trace = {
+        x: [0,1,2,3,4],
+        y: [100,200,150,300,250],
+        type: 'scatter'
+    };
+
+    Plotly.newPlot('graph', [trace]);
+}
+</script>
+
+</body>
+</html>
